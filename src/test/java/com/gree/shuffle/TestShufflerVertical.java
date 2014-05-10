@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.Test;
 
 public class TestShufflerVertical {
 	
