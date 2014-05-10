@@ -1,20 +1,26 @@
 package com.gree.shuffle;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.StringWriter;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class TestShufflerInput {
+public class TestShufflerHorizontal {
 
+	private static String ENCODING = "UTF-8";
+	
 	private Shuffler shuffler;
-	private OutputStream output;
+	private ByteArrayOutputStream output;
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -30,13 +36,16 @@ public class TestShufflerInput {
 	}
 
 	@Test
-	public void shouldParseInput() throws ShufflerException, FileNotFoundException {
+	public void shouldShuffleHorizontally() throws ShufflerException,
+			IOException {
 		shuffler.shuffle(getInput("/simple_input.txt"), output,
 				new String[] { "H" });
+		String results = output.toString(ENCODING);
+		assertEquals(getFileContents("/simple_output_h.txt"), results);
 	}
 
 	@Test
-	public void shouldNotAcceptEmptyInput() throws ShufflerException,
+	public void shouldNotAcceptInvalidCommands() throws ShufflerException,
 			FileNotFoundException {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Input is empty");
@@ -46,5 +55,11 @@ public class TestShufflerInput {
 
 	private InputStream getInput(String filename) throws FileNotFoundException {
 		return this.getClass().getResourceAsStream(filename);
+	}
+
+	private String getFileContents(String filename) throws FileNotFoundException, IOException {
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(getInput(filename), writer, ENCODING);
+		return writer.toString();
 	}
 }

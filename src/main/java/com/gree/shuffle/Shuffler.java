@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Shuffler {
@@ -25,6 +27,8 @@ public class Shuffler {
 		if (!validateLines(lineList)) {
 			throw new ShufflerException("Input is empty");
 		}
+		List<String> outputLines = processCommands(commands);
+		writeOutput(output, outputLines);
 	}
 
 	private void validateCommands(String[] commands) throws ShufflerException {
@@ -72,5 +76,41 @@ public class Shuffler {
 
 	private boolean validateLines(List<String> lines) throws ShufflerException {
 		return (lines.size() > 0);
+	}
+
+	private List<String> processCommands(String[] commands) {
+		char[][] output = buildOutputList();
+		for (int i = 0; i < lineList.size(); i++) {
+			String line = lineList.get(i);
+			for (int j = 0; j < line.length(); j++) {
+				output[i][line.length() - j - 1] = line.charAt(j);
+			}
+		}
+		return convertOutputListToString(output);
+	}
+
+	private char[][] buildOutputList() {
+		char[][] output = new char[lineList.size()][];
+		for (int i = 0; i < lineList.size(); i++) {
+			String line = lineList.get(i);
+			output[i] = new char[line.length()];
+		}
+		return output;
+	}
+
+	private List<String> convertOutputListToString(char[][] output) {
+		List<String> outputStrings = new ArrayList<String>();
+		for (int i = 0; i < output.length; i++) {
+			outputStrings.add(new String(output[i]));
+		}
+		return outputStrings;
+	}
+
+	private void writeOutput(OutputStream output, List<String> outputLines) {
+		PrintWriter writer = new PrintWriter(output);
+		for (Iterator<String> iter = outputLines.iterator(); iter.hasNext();) {
+			writer.println(iter.next());
+		}
+		writer.close();
 	}
 }
