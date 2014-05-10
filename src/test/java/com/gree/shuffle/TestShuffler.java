@@ -11,6 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.gree.transform.TransformerException;
+
 public class TestShuffler {
 
 	private Shuffler shuffler;
@@ -19,33 +21,20 @@ public class TestShuffler {
 	private OutputStream output;
 
 	@Rule
-	public ExpectedException  thrown = ExpectedException.none();
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() throws Exception {
 		shuffler = new Shuffler();
 		sampleText = "test";
-		input = new ByteArrayInputStream(sampleText.getBytes(Charset.defaultCharset()));
+		input = new ByteArrayInputStream(sampleText.getBytes(Charset
+				.defaultCharset()));
 		output = new ByteArrayOutputStream();
 	}
 
 	@Test
-	public void shouldShuffle() throws ShufflerException {
-		String[] commands = {"H", "V", "-15", "5"};
+	public void shouldShuffle() throws ShufflerException, TransformerException {
+		String[] commands = { "H", "V", "-15", "5" };
 		shuffler.shuffle(input, output, commands);
-	}
-
-	@Test
-	public void shouldNotAcceptInvalidCommands() throws ShufflerException {
-		thrown.expect(ShufflerException.class);
-		thrown.expectMessage("Unexpected command: W");
-		shuffler.shuffle(input, output, new String[] {"H", "V", "W"});
-	}
-
-	@Test
-	public void shouldNotAcceptFloatCommands() throws ShufflerException {
-		thrown.expect(ShufflerException.class);
-		thrown.expectMessage("Unexpected command: 5.7");
-		shuffler.shuffle(input, output, new String[] {"5.7"});
 	}
 }

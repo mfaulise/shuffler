@@ -8,6 +8,8 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gree.transform.TransformerException;
+
 public class TestShufflerHorizontal {
 
 	private Shuffler shuffler;
@@ -21,7 +23,7 @@ public class TestShufflerHorizontal {
 
 	@Test
 	public void shouldShuffleHorizontally() throws ShufflerException,
-			IOException {
+			IOException, TransformerException {
 		shuffler.shuffle(Utils.getInput("/simple_input.txt"), output,
 				new String[] { "H" });
 		String results = output.toString(Utils.ENCODING);

@@ -6,9 +6,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.Before;
+import org.junit.Test;
+
+import com.gree.transform.TransformerException;
 
 public class TestShufflerVertical {
-	
+
 	private Shuffler shuffler;
 	private ByteArrayOutputStream output;
 
@@ -18,10 +21,9 @@ public class TestShufflerVertical {
 		output = new ByteArrayOutputStream();
 	}
 
-//	TODO re-enable this test after adding the command transformer 
-//	@Test
+	@Test
 	public void shouldShuffleVertically() throws ShufflerException,
-			IOException {
+			IOException, TransformerException {
 		shuffler.shuffle(Utils.getInput("/simple_input.txt"), output,
 				new String[] { "V" });
 		String results = output.toString(Utils.ENCODING);

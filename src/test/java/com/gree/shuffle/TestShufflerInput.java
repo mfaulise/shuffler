@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.gree.transform.TransformerException;
+
 public class TestShufflerInput {
 
 	private Shuffler shuffler;
@@ -25,14 +27,15 @@ public class TestShufflerInput {
 	}
 
 	@Test
-	public void shouldParseInput() throws ShufflerException, FileNotFoundException {
+	public void shouldParseInput() throws ShufflerException,
+			FileNotFoundException, TransformerException {
 		shuffler.shuffle(getInput("/simple_input.txt"), output,
 				new String[] { "H" });
 	}
 
 	@Test
 	public void shouldNotAcceptEmptyInput() throws ShufflerException,
-			FileNotFoundException {
+			FileNotFoundException, TransformerException {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Input is empty");
 		shuffler.shuffle(getInput("/empty_input.txt"), output,
@@ -40,8 +43,9 @@ public class TestShufflerInput {
 	}
 
 	@Test
-	public void shouldNotAcceptInputWithVaryingLineLengths() throws ShufflerException,
-			FileNotFoundException {
+	public void shouldNotAcceptInputWithVaryingLineLengths()
+			throws ShufflerException, FileNotFoundException,
+			TransformerException {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Input lines are of varying length");
 		shuffler.shuffle(getInput("/invalid_line_input.txt"), output,

@@ -1,5 +1,7 @@
 package com.gree.shuffle;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,48 +10,28 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gree.transform.Transformer;
+import com.gree.transform.TransformerException;
+
 public class Shuffler {
 
-	public static final String[] VALID_COMMANDS = new String[] { "H", "V" };
 	private List<String> lineList;
 
 	public static void main(String[] args) {
 	}
 
 	public void shuffle(InputStream input, OutputStream output,
-			String[] commands) throws ShufflerException {
-		validateCommands(commands);
+			String[] commands) throws ShufflerException, TransformerException {
+		Transformer tf = new Transformer(commands);
 		parseInput(input);
 		validateLines(lineList);
-		List<String> outputLines = processCommands(commands);
+		List<String> outputLines = processCommands(tf);
 		writeOutput(output, outputLines);
 	}
-
-	private void validateCommands(String[] commands) throws ShufflerException {
-		for (int i = 0; i < commands.length; i++) {
-			if (Arrays.asList(VALID_COMMANDS).contains(
-					commands[i].toUpperCase())) {
-				continue;
-			} else if (!isInteger(commands[i])) {
-				throw new ShufflerException("Unexpected command: "
-						+ commands[i]);
-			}
-		}
-	}
-
-	private static boolean isInteger(String s) {
-		try {
-			Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
-
+	
 	private void parseInput(InputStream input) throws ShufflerException {
 		Reader reader = new InputStreamReader(input);
 		BufferedReader br = new BufferedReader(reader);
@@ -84,12 +66,13 @@ public class Shuffler {
 		}
 	}
 
-	private List<String> processCommands(String[] commands) {
+	private List<String> processCommands(Transformer tf) {
 		char[][] output = buildOutputList();
 		for (int i = 0; i < lineList.size(); i++) {
 			String line = lineList.get(i);
 			for (int j = 0; j < line.length(); j++) {
-				output[i][line.length() - j - 1] = line.charAt(j);
+				Point dest = tf.transform(new Point(j, i), new Rectangle(line.length(), lineList.size()));
+				output[dest.y][dest.x] = line.charAt(j);
 			}
 		}
 		return convertOutputListToString(output);
