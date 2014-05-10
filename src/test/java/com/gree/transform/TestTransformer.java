@@ -92,6 +92,25 @@ public class TestTransformer {
 	}
 
 	@Test
+	public void shouldHandleNegativeNumbers() throws TransformerException {
+		Transformer tf = new Transformer(new String[] { "-5" });
+		Point pt = tf.transform(new Point(0,0), new Rectangle(10, 10));
+		assertEquals(new Point(5,9), pt);
+
+		pt = tf.transform(new Point(2,5), new Rectangle(10, 10));
+		assertEquals(new Point(7,4), pt);
+
+		pt = tf.transform(new Point(7,0), new Rectangle(10, 10));
+		assertEquals(new Point(2,0), pt);
+
+		pt = tf.transform(new Point(8,9), new Rectangle(10, 10));
+		assertEquals(new Point(3,9), pt);
+
+		pt = tf.transform(new Point(0,0), new Rectangle(2, 2));
+		assertEquals(new Point(1,1), pt);
+	}
+
+	@Test
 	public void shouldTransformComplex() throws TransformerException {
 		Transformer tf = new Transformer(new String[] { "H", "5", "V" });
 		Point pt = tf.transform(new Point(0,0), new Rectangle(10, 10));

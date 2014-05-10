@@ -60,9 +60,20 @@ public class Transformer {
 	}
 
 	private Point transformOffset(Point start, Rectangle bounds, int offset) {
-		int newY = (start.y + (int)((start.x + offset)/bounds.width)) % bounds.height;
+		int newY = positive_mod(start.y + (int)((start.x + offset)/bounds.width), bounds.height);
 		int newX = (start.x + offset) % bounds.width;
+		if ( newX < 0 ) {
+			newX += bounds.width;
+			newY = positive_mod(newY - 1, bounds.height);
+		}
 		return new Point(newX, newY);
 	}
 
+	private int positive_mod(int factor, int mod) {
+		int val = factor % mod;
+		if ( val < 0 ) {
+			val += mod;
+		}
+		return val;
+	}
 }
