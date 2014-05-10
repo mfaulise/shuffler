@@ -72,4 +72,20 @@ public class TestTransformer {
 		assertEquals(new Point(2,9), pt);
 	}
 
+	@Test
+	public void shouldTransformByOffset() throws TransformerException {
+		Transformer tf = new Transformer(new String[] { "5" });
+		Point pt = tf.transform(new Point(0,0), new Rectangle(10, 10));
+		assertEquals(new Point(5,0), pt);
+
+		pt = tf.transform(new Point(2,5), new Rectangle(10, 10));
+		assertEquals(new Point(7,5), pt);
+
+		pt = tf.transform(new Point(7,0), new Rectangle(10, 10));
+		assertEquals(new Point(2,1), pt);
+
+		pt = tf.transform(new Point(8,9), new Rectangle(10, 10));
+		assertEquals(new Point(3,0), pt);
+	}
+
 }

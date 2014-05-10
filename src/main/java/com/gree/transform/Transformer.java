@@ -44,6 +44,8 @@ public class Transformer {
 				result = transformHorizontally(result, bounds);
 			} else if (commands[i].toUpperCase() == "V") {
 				result = transformVertically(result, bounds);
+			} else {
+				result = transformOffset(result, bounds, Integer.parseInt(commands[i]));
 			}
 		}
 		return result;
@@ -54,7 +56,13 @@ public class Transformer {
 	}
 
 	private Point transformVertically(Point start, Rectangle bounds) {
-		return new Point(start.x, bounds.height - start.y -1);
+		return new Point(start.x, bounds.height - start.y - 1);
+	}
+
+	private Point transformOffset(Point start, Rectangle bounds, int offset) {
+		int newY = (start.y + (int)((start.x + offset)/bounds.width)) % bounds.height;
+		int newX = (start.x + offset) % bounds.width;
+		return new Point(newX, newY);
 	}
 
 }
