@@ -15,7 +15,8 @@ public class Transformer {
 		this.commands = commands;
 	}
 
-	private void validateCommands(String[] commands) throws TransformerException {
+	private void validateCommands(String[] commands)
+			throws TransformerException {
 		for (int i = 0; i < commands.length; i++) {
 			if (Arrays.asList(VALID_COMMANDS).contains(
 					commands[i].toUpperCase())) {
@@ -39,15 +40,21 @@ public class Transformer {
 	public Point transform(Point start, Rectangle bounds) {
 		Point result = new Point(start.x, start.y);
 		for (int i = 0; i < commands.length; i++) {
-			if( commands[i].toUpperCase() == "H") {
+			if (commands[i].toUpperCase() == "H") {
 				result = transformHorizontally(result, bounds);
+			} else if (commands[i].toUpperCase() == "V") {
+				result = transformVertically(result, bounds);
 			}
 		}
 		return result;
 	}
 
 	private Point transformHorizontally(Point start, Rectangle bounds) {
-		return new Point(bounds.width - start.x -1, start.y);
+		return new Point(bounds.width - start.x - 1, start.y);
+	}
+
+	private Point transformVertically(Point start, Rectangle bounds) {
+		return new Point(start.x, bounds.height - start.y -1);
 	}
 
 }

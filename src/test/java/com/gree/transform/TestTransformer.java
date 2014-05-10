@@ -39,11 +39,37 @@ public class TestTransformer {
 		Point pt = tf.transform(new Point(0,0), new Rectangle(4, 2));
 		assertEquals(new Point(3,0), pt);
 
-		pt = tf.transform(new Point(2,2), new Rectangle(4, 2));
-		assertEquals(new Point(1,2), pt);
+		pt = tf.transform(new Point(2,1), new Rectangle(4, 2));
+		assertEquals(new Point(1,1), pt);
 
 		pt = tf.transform(new Point(17,10), new Rectangle(20, 20));
 		assertEquals(new Point(2,10), pt);
+	}
+
+	@Test
+	public void shouldTransformVertically() throws TransformerException {
+		Transformer tf = new Transformer(new String[] { "V" });
+		Point pt = tf.transform(new Point(0,0), new Rectangle(4, 2));
+		assertEquals(new Point(0,1), pt);
+
+		pt = tf.transform(new Point(2,1), new Rectangle(4, 2));
+		assertEquals(new Point(2,0), pt);
+
+		pt = tf.transform(new Point(17,10), new Rectangle(20, 20));
+		assertEquals(new Point(17,9), pt);
+	}
+
+	@Test
+	public void shouldTransformaBothVerticallyAndHorizontally() throws TransformerException {
+		Transformer tf = new Transformer(new String[] { "H", "V" });
+		Point pt = tf.transform(new Point(0,0), new Rectangle(4, 2));
+		assertEquals(new Point(3,1), pt);
+
+		pt = tf.transform(new Point(2,1), new Rectangle(4, 2));
+		assertEquals(new Point(1,0), pt);
+
+		pt = tf.transform(new Point(17,10), new Rectangle(20, 20));
+		assertEquals(new Point(2,9), pt);
 	}
 
 }
