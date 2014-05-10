@@ -25,7 +25,7 @@ public class TestShuffler {
 	@Before
 	public void setUp() throws Exception {
 		shuffler = new Shuffler();
-		sampleText = "";
+		sampleText = "test";
 		input = new ByteArrayInputStream(sampleText.getBytes(Charset.defaultCharset()));
 		output = new ByteArrayOutputStream();
 	}
@@ -45,5 +45,12 @@ public class TestShuffler {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Unexpected command: W");
 		shuffler.shuffle(input, output, new String[] {"H", "V", "W"});
+	}
+
+	@Test
+	public void shouldNotAcceptFloatCommands() throws ShufflerException {
+		thrown.expect(ShufflerException.class);
+		thrown.expectMessage("Unexpected command: 5.7");
+		shuffler.shuffle(input, output, new String[] {"5.7"});
 	}
 }
