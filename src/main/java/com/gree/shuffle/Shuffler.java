@@ -24,9 +24,7 @@ public class Shuffler {
 			String[] commands) throws ShufflerException {
 		validateCommands(commands);
 		parseInput(input);
-		if (!validateLines(lineList)) {
-			throw new ShufflerException("Input is empty");
-		}
+		validateLines(lineList);
 		List<String> outputLines = processCommands(commands);
 		writeOutput(output, outputLines);
 	}
@@ -74,8 +72,16 @@ public class Shuffler {
 		}
 	}
 
-	private boolean validateLines(List<String> lines) throws ShufflerException {
-		return (lines.size() > 0);
+	private void validateLines(List<String> lines) throws ShufflerException {
+		if (lines.size() == 0) {
+			throw new ShufflerException("Input is empty");
+		}
+		int firstLineLength = lines.get(0).length();
+		for (Iterator<String> iter = lines.iterator(); iter.hasNext();) {
+			if(iter.next().length() != firstLineLength) {
+				throw new ShufflerException("Input lines are of varying length");
+			}
+		}
 	}
 
 	private List<String> processCommands(String[] commands) {

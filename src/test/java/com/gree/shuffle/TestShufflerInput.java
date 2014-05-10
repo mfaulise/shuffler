@@ -44,6 +44,15 @@ public class TestShufflerInput {
 				new String[] { "H" });
 	}
 
+	@Test
+	public void shouldNotAcceptInputWithVaryingLineLengths() throws ShufflerException,
+			FileNotFoundException {
+		thrown.expect(ShufflerException.class);
+		thrown.expectMessage("Input lines are of varying length");
+		shuffler.shuffle(getInput("/invalid_line_input.txt"), output,
+				new String[] { "H" });
+	}
+
 	private InputStream getInput(String filename) throws FileNotFoundException {
 		return this.getClass().getResourceAsStream(filename);
 	}
