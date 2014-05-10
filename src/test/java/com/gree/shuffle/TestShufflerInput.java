@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,10 +22,6 @@ public class TestShufflerInput {
 	public void setUp() throws Exception {
 		shuffler = new Shuffler();
 		output = new ByteArrayOutputStream();
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	@Test

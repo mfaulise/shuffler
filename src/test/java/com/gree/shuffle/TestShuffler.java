@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,10 +27,6 @@ public class TestShuffler {
 		sampleText = "test";
 		input = new ByteArrayInputStream(sampleText.getBytes(Charset.defaultCharset()));
 		output = new ByteArrayOutputStream();
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	@Test

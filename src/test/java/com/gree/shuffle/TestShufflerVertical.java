@@ -8,8 +8,8 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestShufflerHorizontal {
-
+public class TestShufflerVertical {
+	
 	private Shuffler shuffler;
 	private ByteArrayOutputStream output;
 
@@ -19,12 +19,13 @@ public class TestShufflerHorizontal {
 		output = new ByteArrayOutputStream();
 	}
 
-	@Test
-	public void shouldShuffleHorizontally() throws ShufflerException,
+//	TODO re-enable this test after adding the command transformer 
+//	@Test
+	public void shouldShuffleVertically() throws ShufflerException,
 			IOException {
 		shuffler.shuffle(Utils.getInput("/simple_input.txt"), output,
-				new String[] { "H" });
+				new String[] { "V" });
 		String results = output.toString(Utils.ENCODING);
-		assertEquals(Utils.getFileContents("/simple_output_h.txt"), results);
+		assertEquals(Utils.getFileContents("/simple_output_v.txt"), results);
 	}
 }
