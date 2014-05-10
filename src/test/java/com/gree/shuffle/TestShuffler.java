@@ -1,40 +1,32 @@
 package com.gree.shuffle;
 
-import java.io.ByteArrayInputStream;
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import com.gree.transform.TransformerException;
+import com.gree.commands.Commands;
+import com.gree.util.Utils;
 
 public class TestShuffler {
 
 	private Shuffler shuffler;
-	private String sampleText;
-	private InputStream input;
-	private OutputStream output;
-
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
+	private ByteArrayOutputStream output;
 
 	@Before
 	public void setUp() throws Exception {
 		shuffler = new Shuffler();
-		sampleText = "test";
-		input = new ByteArrayInputStream(sampleText.getBytes(Charset
-				.defaultCharset()));
 		output = new ByteArrayOutputStream();
 	}
 
 	@Test
-	public void shouldShuffle() throws ShufflerException, TransformerException {
-		String[] commands = { "H", "V", "-15", "5" };
-		shuffler.shuffle(input, output, commands);
+	public void shouldShuffle() throws Exception {
+		String[] commands = Commands.load("/tests/sample/commands.txt");
+		shuffler.shuffle(Utils.getInput("/tests/sample/input.txt"), output,
+				commands);
+		String results = output.toString(Utils.ENCODING);
+		assertEquals(Utils.getFileContents("/tests/sample/output.txt"), results);
 	}
 }

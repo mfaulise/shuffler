@@ -1,4 +1,4 @@
-package com.gree.shuffle;
+package com.gree.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

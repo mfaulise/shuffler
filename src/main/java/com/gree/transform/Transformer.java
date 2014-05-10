@@ -40,9 +40,9 @@ public class Transformer {
 	public Point transform(Point start, Rectangle bounds) {
 		Point result = new Point(start.x, start.y);
 		for (int i = 0; i < commands.length; i++) {
-			if (commands[i].toUpperCase() == "H") {
+			if (commands[i].equalsIgnoreCase("H")) {
 				result = transformHorizontally(result, bounds);
-			} else if (commands[i].toUpperCase() == "V") {
+			} else if (commands[i].equalsIgnoreCase("V")) {
 				result = transformVertically(result, bounds);
 			} else {
 				result = transformOffset(result, bounds, Integer.parseInt(commands[i]));

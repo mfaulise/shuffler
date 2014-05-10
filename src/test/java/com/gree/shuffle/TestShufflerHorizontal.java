@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gree.transform.TransformerException;
+import com.gree.util.Utils;
 
 public class TestShufflerHorizontal {
 
