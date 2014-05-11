@@ -3,6 +3,7 @@ package com.gree.shuffle;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Before;
@@ -28,6 +29,10 @@ public class TestShufflerVertical {
 		shuffler.shuffle(Utils.getInput("/simple_input.txt"), output,
 				new String[] { "V" });
 		String results = output.toString(Utils.ENCODING);
-		assertEquals(Utils.getFileContents("/simple_output_v.txt"), results);
+		assertEquals(Utils.getFileContents(getFile("/simple_output_v.txt")), results);
+	}
+
+	private File getFile(String filename) {
+		return new File(getClass().getResource(filename).getPath());
 	}
 }

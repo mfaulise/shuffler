@@ -20,9 +20,6 @@ public class Shuffler {
 
 	private List<String> lineList;
 
-	public static void main(String[] args) {
-	}
-
 	public void shuffle(InputStream input, OutputStream output,
 			String[] commands) throws ShufflerException, TransformerException {
 		Transformer tf = new Transformer(commands);

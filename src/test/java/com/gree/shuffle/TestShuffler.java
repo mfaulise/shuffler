@@ -3,6 +3,7 @@ package com.gree.shuffle;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import org.junit.Before;
 import org.junit.experimental.theories.DataPoints;
@@ -33,11 +34,15 @@ public class TestShuffler {
 
 	@Theory
 	public void shouldShuffle(String path) throws Exception {
-		String[] commands = Commands.load("/tests/" + path + "/commands.txt");
+		String[] commands = Commands.load(getFile("/tests/" + path + "/commands.txt"));
 		shuffler.shuffle(Utils.getInput("/tests/" + path + "/input.txt"),
 				output, commands);
 		String results = output.toString(Utils.ENCODING);
-		assertEquals(Utils.getFileContents("/tests/" + path + "/output.txt"),
+		assertEquals(Utils.getFileContents(getFile("/tests/" + path + "/output.txt")),
 				results);
+	}
+
+	private File getFile(String filename) {
+		return new File(getClass().getResource(filename).getPath());
 	}
 }
