@@ -15,8 +15,7 @@ public class Transformer {
 		this.commands = commands;
 	}
 
-	private void validateCommands(String[] commands)
-			throws TransformerException {
+	private void validateCommands(String[] commands) throws TransformerException {
 		for (int i = 0; i < commands.length; i++) {
 			if (Arrays.asList(VALID_COMMANDS).contains(
 					commands[i].toUpperCase())) {
@@ -45,7 +44,8 @@ public class Transformer {
 			} else if (commands[i].equalsIgnoreCase("V")) {
 				result = transformVertically(result, bounds);
 			} else {
-				result = transformOffset(result, bounds, Integer.parseInt(commands[i]));
+				result = transformOffset(result, bounds,
+						Integer.parseInt(commands[i]));
 			}
 		}
 		return result;
@@ -60,9 +60,10 @@ public class Transformer {
 	}
 
 	private Point transformOffset(Point start, Rectangle bounds, int offset) {
-		int newY = positive_mod(start.y + (int)((start.x + offset)/bounds.width), bounds.height);
+		int newY = positive_mod(start.y
+				+ (int) ((start.x + offset) / bounds.width), bounds.height);
 		int newX = (start.x + offset) % bounds.width;
-		if ( newX < 0 ) {
+		if (newX < 0) {
 			newX += bounds.width;
 			newY = positive_mod(newY - 1, bounds.height);
 		}
@@ -71,7 +72,7 @@ public class Transformer {
 
 	private int positive_mod(int factor, int mod) {
 		int val = factor % mod;
-		if ( val < 0 ) {
+		if (val < 0) {
 			val += mod;
 		}
 		return val;

@@ -34,4 +34,8 @@ public class Utils {
 		}
 		return writer.toString();
 	}
+
+	public static File getFile(String filename) {
+		return new File(Utils.class.getResource(filename).getPath());
+	}
 }

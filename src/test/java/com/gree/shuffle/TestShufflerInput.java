@@ -1,7 +1,6 @@
 package com.gree.shuffle;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -10,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.gree.transform.TransformerException;
+import com.gree.util.Utils;
 
 public class TestShufflerInput {
 
@@ -27,32 +26,24 @@ public class TestShufflerInput {
 	}
 
 	@Test
-	public void shouldParseInput() throws ShufflerException,
-			FileNotFoundException, TransformerException {
-		shuffler.shuffle(getInput("/simple_input.txt"), output,
-				new String[] { "H" });
+	public void shouldParseInput() throws Exception {
+		InputStream input = Utils.getInput("/simple_input.txt");
+		shuffler.shuffle(input, output, new String[] { "H" });
 	}
 
 	@Test
-	public void shouldNotAcceptEmptyInput() throws ShufflerException,
-			FileNotFoundException, TransformerException {
+	public void shouldNotAcceptEmptyInput() throws Exception {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Input is empty");
-		shuffler.shuffle(getInput("/empty_input.txt"), output,
-				new String[] { "H" });
+		InputStream input = Utils.getInput("/empty_input.txt");
+		shuffler.shuffle(input, output, new String[] { "H" });
 	}
 
 	@Test
-	public void shouldNotAcceptInputWithVaryingLineLengths()
-			throws ShufflerException, FileNotFoundException,
-			TransformerException {
+	public void shouldNotAcceptInputWithVaryingLineLengths() throws Exception {
 		thrown.expect(ShufflerException.class);
 		thrown.expectMessage("Input lines are of varying length");
-		shuffler.shuffle(getInput("/invalid_line_input.txt"), output,
-				new String[] { "H" });
-	}
-
-	private InputStream getInput(String filename) throws FileNotFoundException {
-		return this.getClass().getResourceAsStream(filename);
+		InputStream input = Utils.getInput("/invalid_line_input.txt");
+		shuffler.shuffle(input, output, new String[] { "H" });
 	}
 }

@@ -25,7 +25,7 @@ public class Shuffler {
 		Transformer tf = new Transformer(commands);
 		parseInput(input);
 		validateLines(lineList);
-		List<String> outputLines = processCommands(tf);
+		List<String> outputLines = process(tf);
 		writeOutput(output, outputLines);
 	}
 	
@@ -46,7 +46,7 @@ public class Shuffler {
 			try {
 				br.close();
 			} catch (IOException e) {
-				throw new ShufflerException("Error closing file");
+				throw new ShufflerException("Error closing reader");
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class Shuffler {
 		}
 	}
 
-	private List<String> processCommands(Transformer tf) {
+	private List<String> process(Transformer tf) {
 		char[][] output = buildOutputList();
 		for (int i = 0; i < lineList.size(); i++) {
 			String line = lineList.get(i);

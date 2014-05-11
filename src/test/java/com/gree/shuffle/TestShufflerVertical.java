@@ -4,12 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gree.transform.TransformerException;
 import com.gree.util.Utils;
 
 public class TestShufflerVertical {
@@ -24,15 +23,11 @@ public class TestShufflerVertical {
 	}
 
 	@Test
-	public void shouldShuffleVertically() throws ShufflerException,
-			IOException, TransformerException {
-		shuffler.shuffle(Utils.getInput("/simple_input.txt"), output,
-				new String[] { "V" });
+	public void shouldShuffleVertically() throws Exception {
+		InputStream input = Utils.getInput("/simple_input.txt");
+		shuffler.shuffle(input, output, new String[] { "V" });
 		String results = output.toString(Utils.ENCODING);
-		assertEquals(Utils.getFileContents(getFile("/simple_output_v.txt")), results);
-	}
-
-	private File getFile(String filename) {
-		return new File(getClass().getResource(filename).getPath());
+		File file = Utils.getFile("/simple_output_v.txt");
+		assertEquals(Utils.getFileContents(file), results);
 	}
 }
